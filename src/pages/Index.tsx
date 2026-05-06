@@ -429,6 +429,24 @@ export default function Index() {
             </div>
           </div>
 
+          {/* Фото банкетного зала */}
+          <div
+            style={{
+              borderRadius: "12px",
+              overflow: "hidden",
+              border: "2px solid var(--beige-dark)",
+              marginBottom: "16px",
+              cursor: "pointer",
+            }}
+            onClick={() => setLightbox("https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/a9eaa17e-2a33-4c01-8f9b-941704ffe856.jpeg")}
+          >
+            <img
+              src="https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/a9eaa17e-2a33-4c01-8f9b-941704ffe856.jpeg"
+              alt="Банкетный зал Фортуна"
+              style={{ width: "100%", height: "220px", objectFit: "cover", display: "block" }}
+            />
+          </div>
+
           {/* 2GIS карта */}
           <div
             style={{
@@ -462,6 +480,41 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Якутское обращение */}
+      <section className="max-w-2xl mx-auto px-4 mb-10">
+        <div className="section-card p-8 animate-fade-in-up delay-500 text-center" style={{ opacity: 0 }}>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="diamond-sm" />
+            <span className="diamond" />
+            <span className="diamond-sm" />
+          </div>
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(16px, 3.5vw, 20px)",
+              fontStyle: "italic",
+              color: "var(--brown)",
+              lineHeight: 1.9,
+              whiteSpace: "pre-line",
+            }}
+          >
+            {`Истиҥник саныыр уруу-аймах дьоннорум,
+Күлэ-үөрэ көрсүһэр күндү доҕотторум,
+Үлэ үөһүгэр алтыспыт үтүө табаарыстарым!
+Үбүлүөйдээх 65 сааспын
+бэлиэтиир дьоро киэһэбэр
+ааспыты ахтыһа, инникини кэрэлэһэ
+үтүө санаалаах, алгыс тыллаах
+мааны ыалдьыт буолуҥ!`}
+          </p>
+          <div className="flex items-center justify-center gap-3 mt-6">
+            <span className="diamond-sm" />
+            <span className="diamond" />
+            <span className="diamond-sm" />
+          </div>
+        </div>
+      </section>
+
       {/* Подтверждение участия */}
       <section className="max-w-2xl mx-auto px-4 mb-10">
         <div className="section-card p-8 animate-fade-in-up delay-500 text-center" style={{ opacity: 0 }}>
@@ -479,18 +532,34 @@ export default function Index() {
             </h2>
             <span className="diamond-sm" />
           </div>
-          <p style={{ color: "var(--brown-light)", fontSize: "15px", marginBottom: "24px", lineHeight: 1.6 }}>
-            Пожалуйста, подтвердите своё присутствие на торжестве. Для этого перейдите на страницу подтверждения.
+          <p style={{ color: "var(--brown-light)", fontSize: "15px", marginBottom: "28px", lineHeight: 1.7 }}>
+            Пожалуйста, напишите нам в мессенджер, чтобы подтвердить своё присутствие. Укажите ваше имя и количество гостей.
           </p>
-          <button
-            className="btn-primary"
-            onClick={() => navigate("/confirm")}
-          >
-            <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <Icon name="CheckCircle" size={18} />
-              Подтвердить присутствие
-            </span>
-          </button>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}>
+            <a
+              href="https://wa.me/89241631268?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%9F%D0%BE%D0%B4%D1%82%D0%B2%D0%B5%D1%80%D0%B6%D0%B4%D0%B0%D1%8E%20%D1%81%D0%B2%D0%BE%D1%91%20%D0%BF%D1%80%D0%B8%D1%81%D1%83%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5%20%D0%BD%D0%B0%20%D1%8E%D0%B1%D0%B8%D0%BB%D0%B5%D0%B5%20%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9F%D0%B5%D1%82%D1%80%D0%B0%20%D0%95%D0%B3%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87%D0%B0%2023%20%D0%BC%D0%B0%D1%8F.%20%D0%9C%D0%BE%D1%91%20%D0%B8%D0%BC%D1%8F%3A%20"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex items-center gap-2"
+              style={{ textDecoration: "none", background: "linear-gradient(135deg, #25D366, #128C7E)" }}
+            >
+              <Icon name="MessageCircle" size={20} />
+              Написать в WhatsApp
+            </a>
+            <a
+              href="https://t.me/+79241631268?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%9F%D0%BE%D0%B4%D1%82%D0%B2%D0%B5%D1%80%D0%B6%D0%B4%D0%B0%D1%8E%20%D1%81%D0%B2%D0%BE%D1%91%20%D0%BF%D1%80%D0%B8%D1%81%D1%83%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5%20%D0%BD%D0%B0%20%D1%8E%D0%B1%D0%B8%D0%BB%D0%B5%D0%B5%20%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9F%D0%B5%D1%82%D1%80%D0%B0%20%D0%95%D0%B3%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87%D0%B0%2023%20%D0%BC%D0%B0%D1%8F.%20%D0%9C%D0%BE%D1%91%20%D0%B8%D0%BC%D1%8F%3A%20"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex items-center gap-2"
+              style={{ textDecoration: "none", background: "linear-gradient(135deg, #229ED9, #1a7fb5)" }}
+            >
+              <Icon name="Send" size={18} />
+              Написать в Telegram
+            </a>
+          </div>
+          <p style={{ color: "var(--brown-light)", fontSize: "13px", marginTop: "16px" }}>
+            Макс · +7 924 163-12-68
+          </p>
         </div>
       </section>
 
@@ -518,7 +587,7 @@ export default function Index() {
             fontStyle: "italic",
           }}
         >
-          С любовью ждём вас на нашем празднике!
+          Буду искренне рад видеть вас, чтобы вместе создать атмосферу радости, улыбок и воспоминаний.
         </p>
         <p style={{ color: "rgba(240,232,216,0.6)", fontSize: "13px", marginTop: "8px" }}>
           23 мая 2026 • с. Крест-Кытыл • Банкетный зал «Фортуна»
