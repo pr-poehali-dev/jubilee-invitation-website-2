@@ -34,13 +34,13 @@
 
     --radius: 0.5rem;
 
-    --beige: #fff5f8;
-    --beige-dark: #f9dde7;
+    --beige: #fdf6ee;
+    --beige-dark: #f0e0cc;
     --brown: #7d3a52;
     --brown-light: #b06880;
     --gold: #c4973b;
     --gold-light: #e2b96a;
-    --cream: #fffbfc;
+    --cream: #fffdf9;
   }
 }
 
@@ -52,6 +52,7 @@
     @apply bg-background text-foreground;
     font-family: "Golos Text", sans-serif;
     background-color: var(--beige);
+    background-image: none;
   }
   h1,
   h2,

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
@@ -45,6 +45,173 @@ function useCountdown(targetDate: Date) {
     return () => clearInterval(t);
   }, []);
   return time;
+}
+
+function ConfirmSection() {
+  const [name, setName] = useState("");
+  const [attend, setAttend] = useState<"yes" | "no" | null>(null);
+  const [guests, setGuests] = useState(1);
+  const [sent, setSent] = useState(false);
+  const nameRef = useRef<HTMLInputElement>(null);
+
+  const handleSend = (messenger: "whatsapp" | "telegram") => {
+    if (!name.trim() || !attend) return;
+    const attendText = attend === "yes"
+      ? `Буду присутствовать (${guests} чел.)`
+      : "Не смогу присутствовать";
+    const text = `Добрый день! Подтверждение на юбилей Петра Егоровича Иванова (23 мая):\nФИО: ${name.trim()}\n${attendText}`;
+    const encoded = encodeURIComponent(text);
+    const url = messenger === "whatsapp"
+      ? `https://wa.me/79241631268?text=${encoded}`
+      : `https://t.me/+79241631268?text=${encoded}`;
+    window.open(url, "_blank");
+    setSent(true);
+  };
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    padding: "12px 16px",
+    border: "1.5px solid var(--beige-dark)",
+    borderRadius: "10px",
+    fontSize: "15px",
+    fontFamily: "'Golos Text', sans-serif",
+    color: "var(--brown)",
+    background: "#fffdf9",
+    outline: "none",
+    boxSizing: "border-box",
+  };
+
+  const optionStyle = (active: boolean): React.CSSProperties => ({
+    flex: 1,
+    padding: "12px 10px",
+    border: `2px solid ${active ? "var(--brown)" : "var(--beige-dark)"}`,
+    borderRadius: "10px",
+    background: active ? "var(--brown)" : "#fffdf9",
+    color: active ? "#fff" : "var(--brown)",
+    fontSize: "15px",
+    fontWeight: 600,
+    cursor: "pointer",
+    transition: "all 0.2s",
+    textAlign: "center",
+  });
+
+  return (
+    <section className="max-w-2xl mx-auto px-4 mb-10">
+      <div className="section-card p-8 animate-fade-in-up delay-500" style={{ opacity: 0 }}>
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <span className="diamond-sm" />
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              color: "var(--brown)",
+              fontSize: "28px",
+              fontWeight: 600,
+            }}
+          >
+            Подтверждение участия
+          </h2>
+          <span className="diamond-sm" />
+        </div>
+
+        {sent ? (
+          <div style={{ textAlign: "center", padding: "20px 0" }}>
+            <div style={{ fontSize: "48px", marginBottom: "12px" }}>🎉</div>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "22px", color: "var(--brown)", fontWeight: 600 }}>
+              Спасибо!
+            </p>
+            <p style={{ color: "var(--brown-light)", fontSize: "15px", marginTop: "8px", lineHeight: 1.6 }}>
+              Ваш ответ отправлен. Ждём вас 23 мая!
+            </p>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "var(--brown)", marginBottom: "8px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                Ваше имя
+              </label>
+              <input
+                ref={nameRef}
+                type="text"
+                placeholder="Фамилия Имя Отчество"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "var(--brown)", marginBottom: "8px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                Смогу прийти?
+              </label>
+              <div style={{ display: "flex", gap: "12px" }}>
+                <button style={optionStyle(attend === "yes")} onClick={() => setAttend("yes")}>
+                  ✓ Буду
+                </button>
+                <button style={optionStyle(attend === "no")} onClick={() => setAttend("no")}>
+                  ✕ Не смогу
+                </button>
+              </div>
+            </div>
+
+            {attend === "yes" && (
+              <div>
+                <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "var(--brown)", marginBottom: "8px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                  Количество человек
+                </label>
+                <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                  <button
+                    onClick={() => setGuests(g => Math.max(1, g - 1))}
+                    style={{ width: "40px", height: "40px", borderRadius: "50%", border: "2px solid var(--beige-dark)", background: "#fffdf9", color: "var(--brown)", fontSize: "20px", cursor: "pointer", lineHeight: 1 }}
+                  >−</button>
+                  <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", fontWeight: 700, color: "var(--brown)", minWidth: "32px", textAlign: "center" }}>{guests}</span>
+                  <button
+                    onClick={() => setGuests(g => Math.min(20, g + 1))}
+                    style={{ width: "40px", height: "40px", borderRadius: "50%", border: "2px solid var(--beige-dark)", background: "#fffdf9", color: "var(--brown)", fontSize: "20px", cursor: "pointer", lineHeight: 1 }}
+                  >+</button>
+                  <span style={{ color: "var(--brown-light)", fontSize: "14px" }}>включая вас</span>
+                </div>
+              </div>
+            )}
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", paddingTop: "4px" }}>
+              <button
+                onClick={() => handleSend("whatsapp")}
+                disabled={!name.trim() || !attend}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                  padding: "14px", borderRadius: "12px", border: "none",
+                  background: (!name.trim() || !attend) ? "#ccc" : "linear-gradient(135deg, #25D366, #128C7E)",
+                  color: "#fff", fontSize: "15px", fontWeight: 600, cursor: (!name.trim() || !attend) ? "not-allowed" : "pointer",
+                  transition: "all 0.2s",
+                }}
+              >
+                <Icon name="MessageCircle" size={20} />
+                Отправить в WhatsApp
+              </button>
+              <button
+                onClick={() => handleSend("telegram")}
+                disabled={!name.trim() || !attend}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                  padding: "14px", borderRadius: "12px", border: "none",
+                  background: (!name.trim() || !attend) ? "#ccc" : "linear-gradient(135deg, #229ED9, #1a7fb5)",
+                  color: "#fff", fontSize: "15px", fontWeight: 600, cursor: (!name.trim() || !attend) ? "not-allowed" : "pointer",
+                  transition: "all 0.2s",
+                }}
+              >
+                <Icon name="Send" size={18} />
+                Отправить в Telegram
+              </button>
+            </div>
+
+            <p style={{ color: "var(--brown-light)", fontSize: "13px", textAlign: "center" }}>
+              Макс · +7 924 163-12-68
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
 
 export default function Index() {
@@ -516,52 +683,7 @@ export default function Index() {
       </section>
 
       {/* Подтверждение участия */}
-      <section className="max-w-2xl mx-auto px-4 mb-10">
-        <div className="section-card p-8 animate-fade-in-up delay-500 text-center" style={{ opacity: 0 }}>
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="diamond-sm" />
-            <h2
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: "var(--brown)",
-                fontSize: "28px",
-                fontWeight: 600,
-              }}
-            >
-              Подтверждение участия
-            </h2>
-            <span className="diamond-sm" />
-          </div>
-          <p style={{ color: "var(--brown-light)", fontSize: "15px", marginBottom: "28px", lineHeight: 1.7 }}>
-            Пожалуйста, напишите нам в мессенджер, чтобы подтвердить своё присутствие. Укажите ваше имя и количество гостей.
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}>
-            <a
-              href="https://wa.me/89241631268?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%9F%D0%BE%D0%B4%D1%82%D0%B2%D0%B5%D1%80%D0%B6%D0%B4%D0%B0%D1%8E%20%D1%81%D0%B2%D0%BE%D1%91%20%D0%BF%D1%80%D0%B8%D1%81%D1%83%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5%20%D0%BD%D0%B0%20%D1%8E%D0%B1%D0%B8%D0%BB%D0%B5%D0%B5%20%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9F%D0%B5%D1%82%D1%80%D0%B0%20%D0%95%D0%B3%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87%D0%B0%2023%20%D0%BC%D0%B0%D1%8F.%20%D0%9C%D0%BE%D1%91%20%D0%B8%D0%BC%D1%8F%3A%20"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center gap-2"
-              style={{ textDecoration: "none", background: "linear-gradient(135deg, #25D366, #128C7E)" }}
-            >
-              <Icon name="MessageCircle" size={20} />
-              Написать в WhatsApp
-            </a>
-            <a
-              href="https://t.me/+79241631268?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%9F%D0%BE%D0%B4%D1%82%D0%B2%D0%B5%D1%80%D0%B6%D0%B4%D0%B0%D1%8E%20%D1%81%D0%B2%D0%BE%D1%91%20%D0%BF%D1%80%D0%B8%D1%81%D1%83%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5%20%D0%BD%D0%B0%20%D1%8E%D0%B1%D0%B8%D0%BB%D0%B5%D0%B5%20%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9F%D0%B5%D1%82%D1%80%D0%B0%20%D0%95%D0%B3%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D1%87%D0%B0%2023%20%D0%BC%D0%B0%D1%8F.%20%D0%9C%D0%BE%D1%91%20%D0%B8%D0%BC%D1%8F%3A%20"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center gap-2"
-              style={{ textDecoration: "none", background: "linear-gradient(135deg, #229ED9, #1a7fb5)" }}
-            >
-              <Icon name="Send" size={18} />
-              Написать в Telegram
-            </a>
-          </div>
-          <p style={{ color: "var(--brown-light)", fontSize: "13px", marginTop: "16px" }}>
-            Макс · +7 924 163-12-68
-          </p>
-        </div>
-      </section>
+      <ConfirmSection />
 
       {/* Нижний декор */}
       <footer
