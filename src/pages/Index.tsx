@@ -1,28 +1,29 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
 const JUBILEE_DATE = new Date("2026-05-23T17:00:00");
 
 const GALLERY_IMAGES = [
   {
-    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/files/28511a55-bde2-4a82-a47c-49042d3f0d64.jpg",
-    caption: "Юбиляр сегодня",
-    year: "2025",
+    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/e796eef2-b20e-4f64-9234-e07261516cc5.jpeg",
+    caption: "Юбиляр",
+    year: "2026",
   },
   {
-    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/files/1cafe26c-be9c-4aff-8dcd-034885f02d47.jpg",
-    caption: "Семейный архив",
-    year: "1980-е",
+    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/4878e4d8-7496-4c89-9986-aa8862c90dfb.jpeg",
+    caption: "Пётр Егорович",
+    year: "2026",
   },
   {
-    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/files/28511a55-bde2-4a82-a47c-49042d3f0d64.jpg",
-    caption: "Памятные моменты",
-    year: "1990-е",
+    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/5c18512f-6d0a-4690-a8be-746a8180ebc2.jpeg",
+    caption: "В народном костюме",
+    year: "2026",
   },
   {
-    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/files/1cafe26c-be9c-4aff-8dcd-034885f02d47.jpg",
-    caption: "С близкими",
-    year: "2000-е",
+    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/24ab09e8-4e04-485f-85f0-f0625d04a5e8.jpeg",
+    caption: "С историей родного края",
+    year: "2026",
   },
 ];
 
@@ -46,15 +47,9 @@ function useCountdown(targetDate: Date) {
 }
 
 export default function Index() {
+  const navigate = useNavigate();
   const time = useCountdown(JUBILEE_DATE);
-  const [form, setForm] = useState({ name: "", guests: "1", phone: "", comment: "" });
-  const [submitted, setSubmitted] = useState(false);
   const [lightbox, setLightbox] = useState<string | null>(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
 
   return (
     <div
@@ -182,7 +177,7 @@ export default function Index() {
               }}
             >
               <img
-                src="https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/files/28511a55-bde2-4a82-a47c-49042d3f0d64.jpg"
+                src="https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/4878e4d8-7496-4c89-9986-aa8862c90dfb.jpeg"
                 alt="Юбиляр"
                 style={{
                   width: "100%",
@@ -438,9 +433,9 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Форма подтверждения */}
+      {/* Подтверждение участия */}
       <section className="max-w-2xl mx-auto px-4 mb-10">
-        <div className="section-card p-8 animate-fade-in-up delay-500" style={{ opacity: 0 }}>
+        <div className="section-card p-8 animate-fade-in-up delay-500 text-center" style={{ opacity: 0 }}>
           <div className="flex items-center justify-center gap-3 mb-6">
             <span className="diamond-sm" />
             <h2
@@ -455,257 +450,18 @@ export default function Index() {
             </h2>
             <span className="diamond-sm" />
           </div>
-
-          {submitted ? (
-            <div className="text-center py-8">
-              <div
-                style={{
-                  width: "70px",
-                  height: "70px",
-                  background: "linear-gradient(135deg, var(--brown), var(--brown-light))",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "0 auto 16px",
-                }}
-              >
-                <Icon name="Check" size={32} style={{ color: "var(--gold-light)" }} />
-              </div>
-              <h3
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "24px",
-                  color: "var(--brown)",
-                  marginBottom: "8px",
-                }}
-              >
-                Спасибо, {form.name}!
-              </h3>
-              <p style={{ color: "var(--brown-light)", fontSize: "15px" }}>
-                Ваше участие подтверждено. Ждём вас 23 мая!
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "var(--brown)",
-                    marginBottom: "6px",
-                    letterSpacing: "0.5px",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Ваше имя *
-                </label>
-                <input
-                  required
-                  type="text"
-                  placeholder="Иван Иванович"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    borderRadius: "8px",
-                    border: "1.5px solid var(--border)",
-                    background: "var(--beige)",
-                    fontSize: "15px",
-                    color: "var(--brown)",
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
-              </div>
-
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "var(--brown)",
-                    marginBottom: "6px",
-                    letterSpacing: "0.5px",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Количество гостей *
-                </label>
-                <select
-                  value={form.guests}
-                  onChange={(e) => setForm({ ...form, guests: e.target.value })}
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    borderRadius: "8px",
-                    border: "1.5px solid var(--border)",
-                    background: "var(--beige)",
-                    fontSize: "15px",
-                    color: "var(--brown)",
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                >
-                  {["1", "2", "3", "4", "5+"].map((n) => (
-                    <option key={n} value={n}>
-                      {n} {n === "1" ? "гость" : "гостя"}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "var(--brown)",
-                    marginBottom: "6px",
-                    letterSpacing: "0.5px",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Телефон
-                </label>
-                <input
-                  type="tel"
-                  placeholder="+7 (914) 000-00-00"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    borderRadius: "8px",
-                    border: "1.5px solid var(--border)",
-                    background: "var(--beige)",
-                    fontSize: "15px",
-                    color: "var(--brown)",
-                    outline: "none",
-                    boxSizing: "border-box",
-                  }}
-                />
-              </div>
-
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "var(--brown)",
-                    marginBottom: "6px",
-                    letterSpacing: "0.5px",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Пожелания
-                </label>
-                <textarea
-                  placeholder="Особые пожелания, диетические предпочтения..."
-                  rows={3}
-                  value={form.comment}
-                  onChange={(e) => setForm({ ...form, comment: e.target.value })}
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    borderRadius: "8px",
-                    border: "1.5px solid var(--border)",
-                    background: "var(--beige)",
-                    fontSize: "15px",
-                    color: "var(--brown)",
-                    outline: "none",
-                    resize: "vertical",
-                    boxSizing: "border-box",
-                  }}
-                />
-              </div>
-
-              <button type="submit" className="btn-primary" style={{ alignSelf: "center" }}>
-                Подтвердить участие
-              </button>
-            </form>
-          )}
-        </div>
-      </section>
-
-      {/* Контакты */}
-      <section className="max-w-2xl mx-auto px-4 mb-10">
-        <div className="section-card p-8 animate-fade-in-up delay-600" style={{ opacity: 0 }}>
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="diamond-sm" />
-            <h2
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: "var(--brown)",
-                fontSize: "28px",
-                fontWeight: 600,
-              }}
-            >
-              Контакты организаторов
-            </h2>
-            <span className="diamond-sm" />
-          </div>
-
-          <div className="flex flex-col gap-4">
-            {[
-              { icon: "User", name: "Организатор 1", role: "Ответственный за мероприятие", phone: "+7 (914) 000-00-01" },
-              { icon: "User", name: "Организатор 2", role: "По вопросам размещения", phone: "+7 (914) 000-00-02" },
-            ].map((contact, i) => (
-              <div
-                key={i}
-                style={{
-                  background: "var(--beige)",
-                  border: "1px solid var(--beige-dark)",
-                  borderRadius: "10px",
-                  padding: "16px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "16px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <div
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    background: "linear-gradient(135deg, var(--brown), var(--brown-light))",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  <Icon name="User" size={20} style={{ color: "var(--gold-light)" }} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontWeight: 600, color: "var(--brown)", fontSize: "16px" }}>{contact.name}</p>
-                  <p style={{ color: "var(--brown-light)", fontSize: "13px" }}>{contact.role}</p>
-                </div>
-                <a
-                  href={`tel:${contact.phone}`}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    color: "var(--gold)",
-                    textDecoration: "none",
-                    fontWeight: 600,
-                    fontSize: "15px",
-                  }}
-                >
-                  <Icon name="Phone" size={16} />
-                  {contact.phone}
-                </a>
-              </div>
-            ))}
-          </div>
+          <p style={{ color: "var(--brown-light)", fontSize: "15px", marginBottom: "24px", lineHeight: 1.6 }}>
+            Пожалуйста, подтвердите своё присутствие на торжестве. Для этого перейдите на страницу подтверждения.
+          </p>
+          <button
+            className="btn-primary"
+            onClick={() => navigate("/confirm")}
+          >
+            <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <Icon name="CheckCircle" size={18} />
+              Подтвердить присутствие
+            </span>
+          </button>
         </div>
       </section>
 
