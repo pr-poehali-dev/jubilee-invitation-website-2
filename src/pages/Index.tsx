@@ -4,26 +4,27 @@ import Icon from "@/components/ui/icon";
 
 const JUBILEE_DATE = new Date("2026-05-23T17:00:00");
 
+// Фото сидящего в костюме идёт первым (центральное/главное)
 const GALLERY_IMAGES = [
   {
     src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/e796eef2-b20e-4f64-9234-e07261516cc5.jpeg",
-    caption: "Юбиляр",
-    year: "2026",
+    caption: "Пётр Егорович",
   },
   {
     src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/4878e4d8-7496-4c89-9986-aa8862c90dfb.jpeg",
-    caption: "Пётр Егорович",
-    year: "2026",
+    caption: "Юбиляр",
   },
   {
     src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/5c18512f-6d0a-4690-a8be-746a8180ebc2.jpeg",
     caption: "В народном костюме",
-    year: "2026",
   },
   {
     src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/24ab09e8-4e04-485f-85f0-f0625d04a5e8.jpeg",
     caption: "С историей родного края",
-    year: "2026",
+  },
+  {
+    src: "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/33999e40-9856-4f96-ab03-a7a576b85ba4.jpeg",
+    caption: "Памятные моменты",
   },
 ];
 
@@ -50,6 +51,10 @@ export default function Index() {
   const navigate = useNavigate();
   const time = useCountdown(JUBILEE_DATE);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const prevSlide = () => setActiveSlide((i) => (i - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+  const nextSlide = () => setActiveSlide((i) => (i + 1) % GALLERY_IMAGES.length);
 
   return (
     <div
@@ -109,11 +114,16 @@ export default function Index() {
               className="animate-fade-in-up delay-300 shimmer"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                color: "var(--gold-light)",
-                fontSize: "clamp(60px, 12vw, 120px)",
+                background: "linear-gradient(135deg, #e2b96a 0%, #f5d58a 40%, #c4973b 70%, #e2b96a 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                fontSize: "clamp(100px, 22vw, 200px)",
                 fontWeight: 700,
                 lineHeight: 1,
                 opacity: 0,
+                textShadow: "none",
+                filter: "drop-shadow(0 4px 12px rgba(196,151,59,0.4))",
               }}
             >
               65
@@ -145,7 +155,7 @@ export default function Index() {
 
       <div className="h-6" />
 
-      {/* Фото юбиляра */}
+      {/* Фото юбиляра + галерея */}
       <section className="max-w-2xl mx-auto px-4 mb-10">
         <div className="section-card p-8 text-center animate-fade-in-up delay-200" style={{ opacity: 0 }}>
           <div className="flex items-center justify-center gap-3 mb-6">
@@ -158,39 +168,107 @@ export default function Index() {
                 fontWeight: 600,
               }}
             >
-              Юбиляр
+              Иванов Пётр Егорович
             </h2>
             <span className="diamond-sm" />
           </div>
 
-          <div className="relative inline-block">
+          {/* Слайдер галереи */}
+          <div style={{ position: "relative", marginBottom: "20px" }}>
+            {/* Главное фото */}
             <div
               style={{
-                width: "220px",
-                height: "220px",
-                borderRadius: "50%",
-                border: "6px solid var(--gold)",
-                padding: "6px",
+                width: "100%",
+                maxWidth: "380px",
                 margin: "0 auto",
-                boxShadow: "0 0 0 2px var(--brown-light), 0 8px 30px rgba(92,61,30,0.25)",
+                borderRadius: "16px",
+                border: "4px solid var(--gold)",
+                boxShadow: "0 8px 32px rgba(125,58,82,0.2)",
                 overflow: "hidden",
+                cursor: "pointer",
+                position: "relative",
               }}
+              onClick={() => setLightbox(GALLERY_IMAGES[activeSlide].src)}
             >
               <img
-                src="https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/4878e4d8-7496-4c89-9986-aa8862c90dfb.jpeg"
-                alt="Юбиляр"
+                src={GALLERY_IMAGES[activeSlide].src}
+                alt={GALLERY_IMAGES[activeSlide].caption}
                 style={{
                   width: "100%",
-                  height: "100%",
+                  height: "420px",
                   objectFit: "cover",
-                  borderRadius: "50%",
+                  objectPosition: "top",
+                  display: "block",
                 }}
               />
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  background: "linear-gradient(transparent, rgba(125,58,82,0.7))",
+                  padding: "30px 16px 14px",
+                  color: "white",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                }}
+              >
+                {GALLERY_IMAGES[activeSlide].caption}
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "12px",
+                  right: "12px",
+                  background: "rgba(125,58,82,0.6)",
+                  borderRadius: "20px",
+                  padding: "4px 10px",
+                  color: "white",
+                  fontSize: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
+              >
+                <Icon name="ZoomIn" size={12} />
+                Увеличить
+              </div>
             </div>
+
+            {/* Кнопки навигации */}
+            <button className="gallery-nav-btn" style={{ left: "calc(50% - 190px - 24px)" }} onClick={prevSlide}>
+              <Icon name="ChevronLeft" size={20} />
+            </button>
+            <button className="gallery-nav-btn" style={{ right: "calc(50% - 190px - 24px)" }} onClick={nextSlide}>
+              <Icon name="ChevronRight" size={20} />
+            </button>
+          </div>
+
+          {/* Миниатюры */}
+          <div style={{ display: "flex", gap: "8px", justifyContent: "center", marginBottom: "20px", flexWrap: "wrap" }}>
+            {GALLERY_IMAGES.map((img, i) => (
+              <div
+                key={i}
+                onClick={() => setActiveSlide(i)}
+                style={{
+                  width: "56px",
+                  height: "56px",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  cursor: "pointer",
+                  border: i === activeSlide ? "3px solid var(--gold)" : "3px solid transparent",
+                  opacity: i === activeSlide ? 1 : 0.6,
+                  transition: "all 0.2s",
+                  flexShrink: 0,
+                }}
+              >
+                <img src={img.src} alt={img.caption} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+              </div>
+            ))}
           </div>
 
           <p
-            className="mt-6"
             style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: "20px",
@@ -380,55 +458,6 @@ export default function Index() {
               <Icon name="Navigation" size={16} />
               Открыть маршрут в 2GIS
             </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Галерея */}
-      <section className="max-w-2xl mx-auto px-4 mb-10">
-        <div className="section-card p-8 animate-fade-in-up delay-400" style={{ opacity: 0 }}>
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="diamond-sm" />
-            <h2
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: "var(--brown)",
-                fontSize: "28px",
-                fontWeight: 600,
-              }}
-            >
-              Галерея фотографий
-            </h2>
-            <span className="diamond-sm" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            {GALLERY_IMAGES.map((img, i) => (
-              <div
-                key={i}
-                style={{ position: "relative", cursor: "pointer" }}
-                onClick={() => setLightbox(img.src)}
-              >
-                <img src={img.src} alt={img.caption} className="gallery-img" />
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    background: "linear-gradient(transparent, rgba(92,61,30,0.75))",
-                    borderRadius: "0 0 8px 8px",
-                    padding: "20px 10px 8px",
-                    color: "var(--cream)",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                  }}
-                >
-                  <div>{img.caption}</div>
-                  <div style={{ color: "var(--gold-light)", fontSize: "11px" }}>{img.year}</div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
