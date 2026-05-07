@@ -359,24 +359,19 @@ export default function Index() {
               Юбилей
             </h1>
 
-            <div
-              className="animate-fade-in-up delay-300 shimmer"
-              style={{
-                fontFamily: "'Times New Roman', Times, serif",
-                background: "linear-gradient(135deg, #e2b96a 0%, #f5d58a 40%, #c4973b 70%, #e2b96a 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                fontSize: "clamp(90px, 22vw, 180px)",
-                fontWeight: 700,
-                fontStyle: "normal",
-                lineHeight: 1,
-                opacity: 0,
-                textShadow: "none",
-                filter: "drop-shadow(0 4px 12px rgba(196,151,59,0.4))",
-              }}
-            >
-              65
+            <div className="animate-fade-in-up delay-300" style={{ opacity: 0, lineHeight: 1 }}>
+              <div
+                className="gold-shine"
+                style={{
+                  fontFamily: "'Times New Roman', Times, serif",
+                  fontSize: "clamp(90px, 22vw, 180px)",
+                  fontWeight: 700,
+                  fontStyle: "normal",
+                  lineHeight: 1,
+                }}
+              >
+                65
+              </div>
             </div>
 
             <h2

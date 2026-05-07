@@ -109,6 +109,35 @@
     opacity: 1;
   }
 }
+@keyframes goldShine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.gold-shine {
+  background: linear-gradient(
+    105deg,
+    #c4973b 0%,
+    #e2b96a 25%,
+    #fff8d6 45%,
+    #ffe97a 50%,
+    #fff8d6 55%,
+    #e2b96a 75%,
+    #c4973b 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: goldShine 3s linear infinite;
+  filter: drop-shadow(0 0 18px rgba(226, 185, 106, 0.7))
+    drop-shadow(0 4px 16px rgba(196, 151, 59, 0.5));
+}
+
 @keyframes countFlip {
   0% {
     transform: translateY(-10px);
