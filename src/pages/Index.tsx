@@ -362,7 +362,7 @@ export default function Index() {
             <div
               className="animate-fade-in-up delay-300 shimmer"
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: "'Times New Roman', Times, serif",
                 background: "linear-gradient(135deg, #e2b96a 0%, #f5d58a 40%, #c4973b 70%, #e2b96a 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -601,7 +601,7 @@ export default function Index() {
               <Icon name="Calendar" size={24} className="mx-auto mb-2" style={{ color: "var(--gold-light)" }} />
               <div
                 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "'Times New Roman', Times, serif",
                   fontSize: "20px",
                   fontWeight: 700,
                   color: "var(--gold-light)",
@@ -627,7 +627,7 @@ export default function Index() {
               <Icon name="Clock" size={24} className="mx-auto mb-2" style={{ color: "var(--gold-light)" }} />
               <div
                 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "'Times New Roman', Times, serif",
                   fontSize: "20px",
                   fontWeight: 700,
                   color: "var(--gold-light)",
