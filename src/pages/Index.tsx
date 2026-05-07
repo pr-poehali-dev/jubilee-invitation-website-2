@@ -543,8 +543,9 @@ export default function Index() {
           <p
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "clamp(16px, 3.5vw, 20px)",
+              fontSize: "clamp(20px, 4.5vw, 28px)",
               fontStyle: "italic",
+              fontWeight: 700,
               color: "var(--brown)",
               lineHeight: 1.9,
               whiteSpace: "pre-line",
