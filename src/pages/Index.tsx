@@ -306,13 +306,24 @@ export default function Index() {
         <div
           className="w-full"
           style={{
-            background:
-              "linear-gradient(180deg, var(--brown) 0%, var(--brown-light) 100%)",
-            padding: "60px 20px 80px",
+            background: "linear-gradient(180deg, var(--brown) 0%, var(--brown-light) 100%)",
+            padding: "52px 20px 80px",
+            position: "relative",
           }}
         >
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="flex items-center justify-center mb-6 animate-fade-in">
+          {/* Декоративный орнамент фоном */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23e2b96a' stroke-width='0.8' opacity='0.08'%3E%3Cpath d='M0 30 L15 15 L30 30 L45 15 L60 30'/%3E%3Cpath d='M0 30 L15 45 L30 30 L45 45 L60 30'/%3E%3C/g%3E%3C/svg%3E\")",
+              backgroundSize: "60px 60px",
+              pointerEvents: "none",
+            }}
+          />
+
+          <div className="max-w-2xl mx-auto text-center" style={{ position: "relative" }}>
+            <div className="flex items-center justify-center mb-5 animate-fade-in">
               <span className="diamond-sm" />
               <span className="diamond" />
               <span className="diamond-sm" />
@@ -323,40 +334,75 @@ export default function Index() {
               style={{
                 fontFamily: "'Golos Text', sans-serif",
                 color: "var(--gold-light)",
-                fontSize: "14px",
+                fontSize: "13px",
                 letterSpacing: "4px",
                 textTransform: "uppercase",
                 opacity: 0,
-                marginBottom: "12px",
+                marginBottom: "20px",
               }}
             >
               Дорогой гость, вы приглашены на
             </p>
 
-            <h1
+            {/* Фото юбиляра в баннере */}
+            <div
               className="animate-fade-in-up delay-200"
+              style={{
+                opacity: 0,
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "24px",
+              }}
+            >
+              <div
+                style={{
+                  width: "clamp(140px, 38vw, 200px)",
+                  height: "clamp(140px, 38vw, 200px)",
+                  borderRadius: "50%",
+                  border: "4px solid var(--gold)",
+                  boxShadow: "0 0 0 6px rgba(226,185,106,0.2), 0 12px 40px rgba(0,0,0,0.35)",
+                  overflow: "hidden",
+                  flexShrink: 0,
+                }}
+              >
+                <img
+                  src={GALLERY_IMAGES[0].src}
+                  alt="Иванов Пётр Егорович"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "top",
+                    display: "block",
+                  }}
+                />
+              </div>
+            </div>
+
+            <h1
+              className="animate-fade-in-up delay-300"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 color: "var(--cream)",
-                fontSize: "clamp(42px, 8vw, 80px)",
+                fontSize: "clamp(38px, 8vw, 72px)",
                 fontWeight: 700,
                 lineHeight: 1.1,
                 opacity: 0,
-                marginBottom: "8px",
+                marginBottom: "4px",
               }}
             >
               Юбилей
             </h1>
 
             <div
-              className="animate-fade-in-up delay-300 shimmer"
+              className="animate-fade-in-up delay-400 shimmer"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 background: "linear-gradient(135deg, #e2b96a 0%, #f5d58a 40%, #c4973b 70%, #e2b96a 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                fontSize: "clamp(100px, 22vw, 200px)",
+                fontSize: "clamp(90px, 22vw, 180px)",
                 fontWeight: 700,
                 lineHeight: 1,
                 opacity: 0,
@@ -368,21 +414,21 @@ export default function Index() {
             </div>
 
             <h2
-              className="animate-fade-in-up delay-400"
+              className="animate-fade-in-up delay-500"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 color: "var(--cream)",
-                fontSize: "clamp(22px, 4vw, 36px)",
+                fontSize: "clamp(20px, 4vw, 32px)",
                 fontWeight: 400,
                 fontStyle: "italic",
                 opacity: 0,
-                marginTop: "8px",
+                marginTop: "4px",
               }}
             >
               Иванова Петра Егоровича
             </h2>
 
-            <div className="flex items-center justify-center mt-6 mb-2 animate-fade-in-up delay-500" style={{ opacity: 0 }}>
+            <div className="flex items-center justify-center mt-6 mb-2 animate-fade-in-up delay-600" style={{ opacity: 0 }}>
               <span className="diamond-sm" />
               <span className="diamond" />
               <span className="diamond-sm" />
