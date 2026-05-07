@@ -728,7 +728,7 @@ export default function Index() {
             />
           </div>
 
-          <div className="mt-4 flex justify-center">
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
             <a
               href="https://2gis.ru/yakutsk/search/%D0%9A%D1%80%D0%B5%D1%81%D1%82-%D0%9A%D1%8B%D1%82%D1%8B%D0%BB"
               target="_blank"
@@ -739,6 +739,37 @@ export default function Index() {
               <Icon name="Navigation" size={16} />
               Открыть маршрут в 2GIS
             </a>
+            <button
+              className="btn-primary inline-flex items-center gap-2"
+              style={{ fontSize: "14px" }}
+              onClick={() => {
+                const ics = [
+                  "BEGIN:VCALENDAR",
+                  "VERSION:2.0",
+                  "PRODID:-//Jubilee//RU",
+                  "BEGIN:VEVENT",
+                  "UID:jubilee-65-ivanov@poehali.dev",
+                  "DTSTAMP:20260501T000000Z",
+                  "DTSTART:20260523T170000",
+                  "DTEND:20260523T230000",
+                  "SUMMARY:Юбилей Иванова Петра Егоровича — 65 лет",
+                  "DESCRIPTION:Торжественный юбилей. Приходите с добрым настроением!",
+                  "LOCATION:Банкетный зал «Фортуна»\\, Намский улус\\, с. Крест-Кытыл\\, ул. Москвитина\\, д. 11/1",
+                  "END:VEVENT",
+                  "END:VCALENDAR",
+                ].join("\r\n");
+                const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "jubilee-ivanov-65.ics";
+                a.click();
+                URL.revokeObjectURL(url);
+              }}
+            >
+              <Icon name="CalendarPlus" size={16} />
+              Добавить в календарь
+            </button>
           </div>
         </div>
       </section>
