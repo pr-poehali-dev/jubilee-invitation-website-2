@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
 const JUBILEE_DATE = new Date("2026-05-23T17:00:00");
+const UPLOAD_URL = "https://functions.poehali.dev/0334dc20-b6f3-4b2f-8691-ec379c7920ee";
+const GET_PHOTOS_URL = "https://functions.poehali.dev/9527d9fe-021a-4671-a8c4-12dde52a7f1f";
 
 // Фото сидящего в костюме идёт первым (центральное/главное)
 const GALLERY_IMAGES = [
@@ -215,6 +217,121 @@ function ConfirmSection() {
 }
 
 const MUSIC_URL = "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/music-jubilee.mp3";
+
+function GuestPhotosSection() {
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const loadPhotos = useCallback(async () => {
+    try {
+      const res = await fetch(GET_PHOTOS_URL);
+      const data = await res.json();
+      const parsed = typeof data === "string" ? JSON.parse(data) : data;
+      setPhotos((parsed.photos || []).map((p: { url: string }) => p.url));
+    } catch (e) { /* ignore */ }
+  }, []);
+
+  useEffect(() => { loadPhotos(); }, [loadPhotos]);
+
+  const handleFiles = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    for (const file of Array.from(files)) {
+      const reader = new FileReader();
+      await new Promise<void>((resolve) => {
+        reader.onload = async () => {
+          try {
+            await fetch(UPLOAD_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                image: reader.result as string,
+                fileName: file.name,
+                contentType: file.type,
+              }),
+            });
+          } catch (e) { /* ignore */ }
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    setUploading(false);
+    await loadPhotos();
+  };
+
+  return (
+    <section className="max-w-2xl mx-auto px-4 mb-10">
+      <div className="section-card p-8 animate-fade-in-up delay-500 text-center" style={{ opacity: 0 }}>
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <span className="diamond-sm" />
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", color: "var(--brown)", fontSize: "28px", fontWeight: 600 }}>
+            Фотографии с юбилея
+          </h2>
+          <span className="diamond-sm" />
+        </div>
+        <p style={{ color: "var(--brown-light)", fontSize: "14px", marginBottom: "20px" }}>
+          Поделитесь своими снимками с праздника — они появятся здесь для всех гостей
+        </p>
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          style={{ display: "none" }}
+          onChange={(e) => handleFiles(e.target.files)}
+        />
+
+        <button
+          className="btn-primary inline-flex items-center gap-2"
+          style={{ fontSize: "14px", marginBottom: photos.length > 0 ? "24px" : "0" }}
+          onClick={() => fileInputRef.current?.click()}
+          disabled={uploading}
+        >
+          <Icon name={uploading ? "Loader" : "Camera"} size={16} />
+          {uploading ? "Загружаю..." : "Добавить фотографии"}
+        </button>
+
+        {photos.length > 0 && (
+          <>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px" }}>
+              {(expanded ? photos : photos.slice(0, 6)).map((url, i) => (
+                <div
+                  key={i}
+                  style={{ borderRadius: "8px", overflow: "hidden", aspectRatio: "1", cursor: "pointer", border: "2px solid var(--beige-dark)" }}
+                  onClick={() => setLightbox(url)}
+                >
+                  <img src={url} alt={`Фото ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                </div>
+              ))}
+            </div>
+            {photos.length > 6 && (
+              <button
+                onClick={() => setExpanded(!expanded)}
+                style={{ marginTop: "12px", background: "none", border: "none", color: "var(--brown)", fontFamily: "'Golos Text', sans-serif", fontSize: "14px", cursor: "pointer", textDecoration: "underline" }}
+              >
+                {expanded ? "Свернуть" : `Показать все (${photos.length})`}
+              </button>
+            )}
+          </>
+        )}
+      </div>
+
+      {lightbox && (
+        <div
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.9)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center" }}
+          onClick={() => setLightbox(null)}
+        >
+          <img src={lightbox} alt="Фото" style={{ maxWidth: "92vw", maxHeight: "88vh", borderRadius: "8px", objectFit: "contain" }} />
+        </div>
+      )}
+    </section>
+  );
+}
 
 export default function Index() {
   const navigate = useNavigate();
@@ -545,6 +662,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Фотографии с юбилея */}
+      <GuestPhotosSection />
 
       {/* Дата и время */}
       <section className="max-w-2xl mx-auto px-4 mb-10">
