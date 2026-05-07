@@ -225,27 +225,36 @@ export default function Index() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const audio = new Audio(MUSIC_URL);
+    const audio = new Audio();
     audio.loop = true;
     audio.volume = 0.35;
+    audio.crossOrigin = "anonymous";
     audioRef.current = audio;
-    audio.load();
 
-    const tryPlay = () => {
-      audio.play().then(() => setMusicPlaying(true)).catch(() => {});
-      document.removeEventListener("click", tryPlay);
-      document.removeEventListener("touchstart", tryPlay);
-    };
+    fetch(MUSIC_URL, { method: "HEAD" })
+      .then((res) => {
+        if (!res.ok) return;
+        audio.src = MUSIC_URL;
+        audio.load();
 
-    const autoTry = setTimeout(() => {
-      audio.play().then(() => setMusicPlaying(true)).catch(() => {
-        document.addEventListener("click", tryPlay);
-        document.addEventListener("touchstart", tryPlay);
-      });
-    }, 800);
+        const tryPlay = () => {
+          audio.play().then(() => setMusicPlaying(true)).catch(() => {});
+          document.removeEventListener("click", tryPlay);
+          document.removeEventListener("touchstart", tryPlay);
+        };
+
+        const autoTry = setTimeout(() => {
+          audio.play().then(() => setMusicPlaying(true)).catch(() => {
+            document.addEventListener("click", tryPlay);
+            document.addEventListener("touchstart", tryPlay);
+          });
+        }, 800);
+
+        return () => clearTimeout(autoTry);
+      })
+      .catch(() => {});
 
     return () => {
-      clearTimeout(autoTry);
       audio.pause();
       audio.src = "";
     };
@@ -253,7 +262,7 @@ export default function Index() {
 
   const toggleMusic = () => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !audio.src) return;
     if (musicPlaying) {
       audio.pause();
       setMusicPlaying(false);
@@ -403,21 +412,6 @@ export default function Index() {
       {/* Фото юбиляра + галерея */}
       <section className="max-w-2xl mx-auto px-4 mb-10">
         <div className="section-card p-8 text-center animate-fade-in-up delay-200" style={{ opacity: 0 }}>
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="diamond-sm" />
-            <h2
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: "var(--brown)",
-                fontSize: "28px",
-                fontWeight: 600,
-              }}
-            >
-              Иванов Пётр Егорович
-            </h2>
-            <span className="diamond-sm" />
-          </div>
-
           {/* Слайдер галереи */}
           <div style={{ position: "relative", marginBottom: "20px" }}>
             {/* Главное фото */}
