@@ -369,6 +369,7 @@ export default function Index() {
                 backgroundClip: "text",
                 fontSize: "clamp(90px, 22vw, 180px)",
                 fontWeight: 700,
+                fontStyle: "normal",
                 lineHeight: 1,
                 opacity: 0,
                 textShadow: "none",
