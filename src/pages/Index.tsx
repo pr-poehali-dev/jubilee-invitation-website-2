@@ -382,11 +382,11 @@ export default function Index() {
             <h2
               className="animate-fade-in-up delay-400"
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: "'Times New Roman', Times, serif",
                 color: "var(--cream)",
-                fontSize: "clamp(20px, 4vw, 32px)",
-                fontWeight: 400,
-                fontStyle: "italic",
+                fontSize: "clamp(26px, 5.5vw, 42px)",
+                fontWeight: 700,
+                fontStyle: "normal",
                 opacity: 0,
                 marginTop: "4px",
               }}
