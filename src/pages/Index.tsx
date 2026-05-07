@@ -225,36 +225,24 @@ export default function Index() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const audio = new Audio();
+    const audio = new Audio(MUSIC_URL);
     audio.loop = true;
     audio.volume = 0.35;
-    audio.crossOrigin = "anonymous";
     audioRef.current = audio;
+    audio.load();
 
-    fetch(MUSIC_URL, { method: "HEAD" })
-      .then((res) => {
-        if (!res.ok) return;
-        audio.src = MUSIC_URL;
-        audio.load();
+    const tryPlay = () => {
+      audio.play().then(() => setMusicPlaying(true)).catch(() => {});
+      document.removeEventListener("click", tryPlay);
+      document.removeEventListener("touchstart", tryPlay);
+    };
 
-        const tryPlay = () => {
-          audio.play().then(() => setMusicPlaying(true)).catch(() => {});
-          document.removeEventListener("click", tryPlay);
-          document.removeEventListener("touchstart", tryPlay);
-        };
-
-        const autoTry = setTimeout(() => {
-          audio.play().then(() => setMusicPlaying(true)).catch(() => {
-            document.addEventListener("click", tryPlay);
-            document.addEventListener("touchstart", tryPlay);
-          });
-        }, 800);
-
-        return () => clearTimeout(autoTry);
-      })
-      .catch(() => {});
+    document.addEventListener("click", tryPlay);
+    document.addEventListener("touchstart", tryPlay);
 
     return () => {
+      document.removeEventListener("click", tryPlay);
+      document.removeEventListener("touchstart", tryPlay);
       audio.pause();
       audio.src = "";
     };
@@ -262,7 +250,7 @@ export default function Index() {
 
   const toggleMusic = () => {
     const audio = audioRef.current;
-    if (!audio || !audio.src) return;
+    if (!audio) return;
     if (musicPlaying) {
       audio.pause();
       setMusicPlaying(false);
