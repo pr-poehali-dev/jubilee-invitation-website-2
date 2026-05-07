@@ -34,13 +34,13 @@
 
     --radius: 0.5rem;
 
-    --beige: #fdf6ee;
-    --beige-dark: #ede0c8;
-    --brown: #6b4c2a;
-    --brown-light: #a07848;
-    --gold: #c4973b;
-    --gold-light: #e2b96a;
-    --cream: #fffdf9;
+    --beige: #e8d5cc;
+    --beige-dark: #d4b5a8;
+    --brown: #7a5248;
+    --brown-light: #a87060;
+    --gold: #b8896a;
+    --gold-light: #d4a888;
+    --cream: #f5ece8;
   }
 }
 
@@ -63,19 +63,19 @@
 
 /* Якутский орнамент SVG паттерн */
 .yakut-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23a07848' stroke-width='1.2' opacity='0.2'%3E%3Cpath d='M0 30 L15 15 L30 30 L45 15 L60 30'/%3E%3Cpath d='M0 30 L15 45 L30 30 L45 45 L60 30'/%3E%3Ccircle cx='15' cy='15' r='3'/%3E%3Ccircle cx='45' cy='15' r='3'/%3E%3Ccircle cx='15' cy='45' r='3'/%3E%3Ccircle cx='45' cy='45' r='3'/%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23a87060' stroke-width='1.2' opacity='0.15'%3E%3Cpath d='M0 30 L15 15 L30 30 L45 15 L60 30'/%3E%3Cpath d='M0 30 L15 45 L30 30 L45 45 L60 30'/%3E%3Ccircle cx='15' cy='15' r='3'/%3E%3Ccircle cx='45' cy='15' r='3'/%3E%3Ccircle cx='15' cy='45' r='3'/%3E%3Ccircle cx='45' cy='45' r='3'/%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 60px 60px;
 }
 
 .yakut-border-top {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='24' viewBox='0 0 80 24'%3E%3Cg fill='%23c4973b' opacity='0.55'%3E%3Cpolygon points='0,24 10,0 20,24'/%3E%3Cpolygon points='20,24 30,0 40,24'/%3E%3Cpolygon points='40,24 50,0 60,24'/%3E%3Cpolygon points='60,24 70,0 80,24'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='24' viewBox='0 0 80 24'%3E%3Cg fill='%23b8896a' opacity='0.55'%3E%3Cpolygon points='0,24 10,0 20,24'/%3E%3Cpolygon points='20,24 30,0 40,24'/%3E%3Cpolygon points='40,24 50,0 60,24'/%3E%3Cpolygon points='60,24 70,0 80,24'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-size: 80px 24px;
   height: 24px;
 }
 
 .yakut-border-bottom {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='24' viewBox='0 0 80 24'%3E%3Cg fill='%23c4973b' opacity='0.55'%3E%3Cpolygon points='0,0 10,24 20,0'/%3E%3Cpolygon points='20,0 30,24 40,0'/%3E%3Cpolygon points='40,0 50,24 60,0'/%3E%3Cpolygon points='60,0 70,24 80,0'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='24' viewBox='0 0 80 24'%3E%3Cg fill='%23b8896a' opacity='0.55'%3E%3Cpolygon points='0,0 10,24 20,0'/%3E%3Cpolygon points='20,0 30,24 40,0'/%3E%3Cpolygon points='40,0 50,24 60,0'/%3E%3Cpolygon points='60,0 70,24 80,0'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-size: 80px 24px;
   height: 24px;

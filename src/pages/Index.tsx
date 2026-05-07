@@ -344,43 +344,8 @@ export default function Index() {
               Дорогой гость, вы приглашены на
             </p>
 
-            {/* Фото юбиляра в баннере */}
-            <div
-              className="animate-fade-in-up delay-200"
-              style={{
-                opacity: 0,
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: "24px",
-              }}
-            >
-              <div
-                style={{
-                  width: "clamp(140px, 38vw, 200px)",
-                  height: "clamp(140px, 38vw, 200px)",
-                  borderRadius: "50%",
-                  border: "4px solid var(--gold)",
-                  boxShadow: "0 0 0 6px rgba(226,185,106,0.2), 0 12px 40px rgba(0,0,0,0.35)",
-                  overflow: "hidden",
-                  flexShrink: 0,
-                }}
-              >
-                <img
-                  src={GALLERY_IMAGES[0].src}
-                  alt="Иванов Пётр Егорович"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    objectPosition: "top",
-                    display: "block",
-                  }}
-                />
-              </div>
-            </div>
-
             <h1
-              className="animate-fade-in-up delay-300"
+              className="animate-fade-in-up delay-200"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 color: "var(--cream)",
@@ -395,7 +360,7 @@ export default function Index() {
             </h1>
 
             <div
-              className="animate-fade-in-up delay-400 shimmer"
+              className="animate-fade-in-up delay-300 shimmer"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 background: "linear-gradient(135deg, #e2b96a 0%, #f5d58a 40%, #c4973b 70%, #e2b96a 100%)",
@@ -414,7 +379,7 @@ export default function Index() {
             </div>
 
             <h2
-              className="animate-fade-in-up delay-500"
+              className="animate-fade-in-up delay-400"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 color: "var(--cream)",
@@ -428,7 +393,7 @@ export default function Index() {
               Иванова Петра Егоровича
             </h2>
 
-            <div className="flex items-center justify-center mt-6 mb-2 animate-fade-in-up delay-600" style={{ opacity: 0 }}>
+            <div className="flex items-center justify-center mt-6 mb-2 animate-fade-in-up delay-500" style={{ opacity: 0 }}>
               <span className="diamond-sm" />
               <span className="diamond" />
               <span className="diamond-sm" />
