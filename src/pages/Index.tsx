@@ -532,6 +532,41 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Якутское обращение */}
+      <section className="max-w-2xl mx-auto px-4 mb-10">
+        <div className="section-card p-8 animate-fade-in-up delay-500 text-center" style={{ opacity: 0 }}>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="diamond-sm" />
+            <span className="diamond" />
+            <span className="diamond-sm" />
+          </div>
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(16px, 3.5vw, 20px)",
+              fontStyle: "italic",
+              color: "var(--brown)",
+              lineHeight: 1.9,
+              whiteSpace: "pre-line",
+            }}
+          >
+            {`Истиҥник саныыр уруу-аймах дьоннорум,
+Күлэ-үөрэ көрсүһэр күндү доҕотторум,
+Үлэ үөһүгэр алтыспыт үтүө табаарыстарым!
+Үбүлүөйдээх 65 сааспын
+бэлиэтиир дьоро киэһэбэр
+ааспыты ахтыһа, инникини кэрэлэһэ
+үтүө санаалаах, алгыс тыллаах
+мааны ыалдьыт буолуҥ!`}
+          </p>
+          <div className="flex items-center justify-center gap-3 mt-6">
+            <span className="diamond-sm" />
+            <span className="diamond" />
+            <span className="diamond-sm" />
+          </div>
+        </div>
+      </section>
+
       {/* Дата и время */}
       <section className="max-w-2xl mx-auto px-4 mb-10">
         <div className="section-card p-8 animate-fade-in-up delay-300" style={{ opacity: 0 }}>
@@ -725,41 +760,6 @@ export default function Index() {
               <Icon name="Navigation" size={16} />
               Открыть маршрут в 2GIS
             </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Якутское обращение */}
-      <section className="max-w-2xl mx-auto px-4 mb-10">
-        <div className="section-card p-8 animate-fade-in-up delay-500 text-center" style={{ opacity: 0 }}>
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="diamond-sm" />
-            <span className="diamond" />
-            <span className="diamond-sm" />
-          </div>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "clamp(16px, 3.5vw, 20px)",
-              fontStyle: "italic",
-              color: "var(--brown)",
-              lineHeight: 1.9,
-              whiteSpace: "pre-line",
-            }}
-          >
-            {`Истиҥник саныыр уруу-аймах дьоннорум,
-Күлэ-үөрэ көрсүһэр күндү доҕотторум,
-Үлэ үөһүгэр алтыспыт үтүө табаарыстарым!
-Үбүлүөйдээх 65 сааспын
-бэлиэтиир дьоро киэһэбэр
-ааспыты ахтыһа, инникини кэрэлэһэ
-үтүө санаалаах, алгыс тыллаах
-мааны ыалдьыт буолуҥ!`}
-          </p>
-          <div className="flex items-center justify-center gap-3 mt-6">
-            <span className="diamond-sm" />
-            <span className="diamond" />
-            <span className="diamond-sm" />
           </div>
         </div>
       </section>
