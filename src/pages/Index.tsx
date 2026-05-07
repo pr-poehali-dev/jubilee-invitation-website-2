@@ -214,11 +214,53 @@ function ConfirmSection() {
   );
 }
 
+const MUSIC_URL = "https://cdn.poehali.dev/projects/745fa52e-4f1c-46d5-b22c-799fedcd745a/bucket/music-jubilee.mp3";
+
 export default function Index() {
   const navigate = useNavigate();
   const time = useCountdown(JUBILEE_DATE);
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audio = new Audio(MUSIC_URL);
+    audio.loop = true;
+    audio.volume = 0.35;
+    audioRef.current = audio;
+    audio.load();
+
+    const tryPlay = () => {
+      audio.play().then(() => setMusicPlaying(true)).catch(() => {});
+      document.removeEventListener("click", tryPlay);
+      document.removeEventListener("touchstart", tryPlay);
+    };
+
+    const autoTry = setTimeout(() => {
+      audio.play().then(() => setMusicPlaying(true)).catch(() => {
+        document.addEventListener("click", tryPlay);
+        document.addEventListener("touchstart", tryPlay);
+      });
+    }, 800);
+
+    return () => {
+      clearTimeout(autoTry);
+      audio.pause();
+      audio.src = "";
+    };
+  }, []);
+
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (musicPlaying) {
+      audio.pause();
+      setMusicPlaying(false);
+    } else {
+      audio.play().then(() => setMusicPlaying(true)).catch(() => {});
+    }
+  };
 
   const prevSlide = () => setActiveSlide((i) => (i - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
   const nextSlide = () => setActiveSlide((i) => (i + 1) % GALLERY_IMAGES.length);
@@ -228,6 +270,35 @@ export default function Index() {
       className="min-h-screen yakut-pattern"
       style={{ backgroundColor: "var(--beige)" }}
     >
+      {/* Кнопка музыки */}
+      <button
+        onClick={toggleMusic}
+        title={musicPlaying ? "Выключить музыку" : "Включить музыку"}
+        style={{
+          position: "fixed",
+          bottom: "24px",
+          right: "20px",
+          zIndex: 999,
+          width: "52px",
+          height: "52px",
+          borderRadius: "50%",
+          border: "2px solid var(--gold)",
+          background: musicPlaying
+            ? "linear-gradient(135deg, var(--brown), var(--brown-light))"
+            : "rgba(253,246,238,0.95)",
+          color: musicPlaying ? "var(--gold-light)" : "var(--brown)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          boxShadow: "0 4px 16px rgba(107,76,42,0.3)",
+          transition: "all 0.3s ease",
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        <Icon name={musicPlaying ? "Music" : "VolumeX"} size={22} />
+      </button>
+
       {/* Hero секция */}
       <section className="relative overflow-hidden">
         <div className="yakut-border-bottom absolute bottom-0 left-0 right-0 z-10" />
@@ -350,7 +421,7 @@ export default function Index() {
                 margin: "0 auto",
                 borderRadius: "16px",
                 border: "4px solid var(--gold)",
-                boxShadow: "0 8px 32px rgba(125,58,82,0.2)",
+                boxShadow: "0 8px 32px rgba(107,76,42,0.2)",
                 overflow: "hidden",
                 cursor: "pointer",
                 position: "relative",
@@ -374,7 +445,7 @@ export default function Index() {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  background: "linear-gradient(transparent, rgba(125,58,82,0.7))",
+                  background: "linear-gradient(transparent, rgba(107,76,42,0.7))",
                   padding: "30px 16px 14px",
                   color: "white",
                   fontSize: "14px",
@@ -388,7 +459,7 @@ export default function Index() {
                   position: "absolute",
                   top: "12px",
                   right: "12px",
-                  background: "rgba(125,58,82,0.6)",
+                  background: "rgba(107,76,42,0.6)",
                   borderRadius: "20px",
                   padding: "4px 10px",
                   color: "white",
